@@ -29,6 +29,7 @@ def simulate_combat_sequence_example():
     print("Simulating attacks on Commander by a variety of units")
     provider = UnitDataProvider.load("wargroove_lethal_simulator/assets/unitdata_2.0.json")
     
+
     # First, we tell the program what unit is being attacked.
     # This information is encapsulated in a defense instance. 
     
@@ -38,7 +39,18 @@ def simulate_combat_sequence_example():
     # @param  terrainDefense: A floating number. E.g. for plains, terrainDefense = 0.1
     # @param  isCrit: A boolean. True if the unit has crit active and False otherwise. 
     
+    
+    
+    #######################################
+    #### START OF MODIFIABLE SECTION 1 ####
+    #######################################
+    
     defend_instance = (Unit.from_name('commander', provider, health=100), 0.3, False)
+    
+    #####################################
+    #### END OF MODIFIABLE SECTION 1 ####
+    #####################################
+    
     
     # Next, we tell the program what units are attacking, and in what order. 
     
@@ -47,6 +59,11 @@ def simulate_combat_sequence_example():
     # to indicate whether the unit must die in order for the attack sequence to succeed. 
     
     # An attack instance can also be a single string, "hex", in which case the program will simulate hexing. 
+
+    
+    #######################################
+    #### START OF MODIFIABLE SECTION 2 ####
+    #######################################
     
     attack_instances = [
         "hex",
@@ -56,6 +73,9 @@ def simulate_combat_sequence_example():
         (Unit.from_name('dragon', provider, health=100), 0, False, False),
         (Unit.from_name('dog', provider, health=100), 0, True, False)
     ]
+    #####################################
+    #### END OF MODIFIABLE SECTION 2 ####
+    #####################################
     
     # The work is done! Now we just simulate the combat sequence: 
     # BzZzZt! Program is performing calculations... 
