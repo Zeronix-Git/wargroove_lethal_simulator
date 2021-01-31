@@ -2,6 +2,7 @@
 A tool to simulate the combat results between a defending unit, and any sequence of attackers, including hexes. 
 
 ## Getting started
+Currently, the program is implemented as a Python script. You will need to have Python 3 installed on your device in order to be able to use this tool. The ultimate goal is to move to a more user-friendly interface, such as a web app frontend. 
 
 1. Make sure you have Python 3 installed. 
 2. Make sure NumPy is installed: 
