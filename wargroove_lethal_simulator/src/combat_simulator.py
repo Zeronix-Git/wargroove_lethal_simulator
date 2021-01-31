@@ -108,8 +108,12 @@ class CombatSimulator:
                         def_unit, def_terrain_defense, is_def_crit,
                         depth = 4):
         """
-        Simulate a combat between atk_unit and def_unit 
-        deoth: Number of decimal places with which to calculate raw probabilities
+        Simulate a combat between atk_unit and def_unit.
+        This is done with the aid of recursion. 
+        
+        @param  depth: Number of decimal places with which to calculate raw probabilities
+        
+        
         
         Returns:
             Dictionary of (final_atk_health, final_def_health) : probability 
