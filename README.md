@@ -3,8 +3,9 @@ A tool to simulate the combat results between a defending unit, and any sequence
 
 ## How does it work?
 - The script re-implements the exact damage calculation logic used by the game to accurately simulate the results of any combat between an attacker and defender. 
-- Modify the `combat_simulator_example.py` file in order to use the script. 
+- RNG is accounted for by maintaining a probability distribution over the attacker and defender's health.  
 - Damage probabilities are (by default) calculated to 4 significant figures; however the program can easily be modified to work with a higher number of significant figures. 
+- Modify the `combat_simulator_example.py` file in order to use the script.
 
 ## Getting started
 Currently, the program is implemented as a Python script. You will need to have Python 3 installed on your device in order to be able to use this tool. The ultimate goal is to move to a more user-friendly interface, such as a web app frontend. 
