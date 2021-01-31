@@ -18,6 +18,10 @@ python3 -m pip install numpy
 3. Install the repository by cloning it or downloading the source as a zip.
 4. See `combat_simulator_example.py` for examples of how to use. 
 
+## Current Features:
+- Any unit (including buildings) as a defender
+- Any unit (excluding buildings) or a hex as an attacker
+
 ## Feature Wishlist
 
 1. TODO: Add support for commander grooves. E.g. Ryota dash, Koji bomb, Ragna jump, Wulfar golf, Sedge groove. 
