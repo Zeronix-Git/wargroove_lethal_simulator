@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Dec  3 19:28:03 2020
-
-@author: Daniel Tan
 """
-
 
 from pathlib import Path
 from flask import Flask
+from wargroove_lethal_simulator.src.combat_simulator import CombatSimulator
+
 def create_app(test_config = None):
     app = Flask(__name__, instance_relative_config=True)
     path = Path(app.instance_path)
@@ -27,7 +26,7 @@ def create_app(test_config = None):
     def hello():
         return 'Hello, World!'
     
-    from . import calc
+    from wargroove_lethal_simulator import calc
     app.register_blueprint(calc.bp)
     
     return app

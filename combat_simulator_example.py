@@ -6,12 +6,12 @@ Created on Sat Sep  5 12:31:38 2020
 """
 
 
-from src.combat_simulator import CombatSimulator
-from src.unit import Unit, UnitDataProvider
+from wargroove_lethal_simulator.src.combat_simulator import CombatSimulator
+from wargroove_lethal_simulator.src.unit import Unit, UnitDataProvider
 
 def simulate_combat_example():
     print("Simulating combat between a Mage on flagstone and Soldier on plains")
-    provider = UnitDataProvider.load("assets/unitdata_2.0.json")
+    provider = UnitDataProvider.load("wargroove_lethal_simulator/assets/unitdata_2.0.json")
     
     atk_mage = Unit.from_name('mage', provider)
     def_sword = Unit.from_name('soldier', provider)
@@ -26,7 +26,7 @@ def simulate_combat_example():
 
 def simulate_combat_test():
     print("Testing mysterious bug")
-    provider = UnitDataProvider.load("assets/unitdata_2.0.json")
+    provider = UnitDataProvider.load("wargroove_lethal_simulator/assets/unitdata_2.0.json")
     
     atk_unit = Unit.from_name('giant', provider, health=100)
     def_unit = Unit.from_name('commander', provider, health=52)
@@ -42,13 +42,15 @@ def simulate_combat_test():
 
 def simulate_combat_sequence_example():
     print("Simulating attacks on Commander by a variety of units")
-    provider = UnitDataProvider.load("assets/unitdata_2.0.json")
+    provider = UnitDataProvider.load("wargroove_lethal_simulator/assets/unitdata_2.0.json")
     
     defend_instance = (Unit.from_name('commander', provider, health=100), 0.3, False)
     attack_instances = [
-        (Unit.from_name('cavalry', provider, health=100), 0.2, False, False),
-        (Unit.from_name('cavalry', provider, health=100), 0.2, False, False),
-        (Unit.from_name('commander', provider, health=100), 0.3, False, False)
+        (Unit.from_name('soldier', provider, health=34), 0, False, True),
+        (Unit.from_name('dog', provider, health=9), 0, False, True),
+        (Unit.from_name('cavalry', provider, health=100), 0, True, False),
+        (Unit.from_name('dragon', provider, health=100), 0, False, False),
+        (Unit.from_name('dog', provider, health=100), 0, True, False)
     ]
     
     state_dist_history = CombatSimulator.simulate_combat_sequence(defend_instance, attack_instances)
