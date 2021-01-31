@@ -24,27 +24,30 @@ def simulate_combat_example():
     for (final_atk_health, final_def_health), prob in results.items():
         print(f"Attacker {final_atk_health}, defender {final_def_health}: probability {100 * prob}%")      
 
-def simulate_combat_test():
-    print("Testing mysterious bug")
-    provider = UnitDataProvider.load("wargroove_lethal_simulator/assets/unitdata_2.0.json")
-    
-    atk_unit = Unit.from_name('giant', provider, health=100)
-    def_unit = Unit.from_name('commander', provider, health=52)
-    atk_terrain_defense = 0.1
-    def_terrain_defense = 0.0
-    
-    results = CombatSimulator.simulate_combat(atk_unit, atk_terrain_defense, False,
-                                              def_unit, def_terrain_defense, False, depth=4)
-    
-    for (final_atk_health, final_def_health), prob in results.items():
-        print(f"Attacker {final_atk_health}, defender {final_def_health}: probability {100 * prob}%")      
-
-
 def simulate_combat_sequence_example():
+    # This example shows how to use the CombatSimulator.simulate_combat_sequence function
     print("Simulating attacks on Commander by a variety of units")
     provider = UnitDataProvider.load("wargroove_lethal_simulator/assets/unitdata_2.0.json")
     
+    # First, we tell the program what unit is being attacked.
+    # This information is encapsulated in a defense instance. 
+    
+    # A defense instance is defined as a tuple of (Unit, terrainDefense, isCrit).
+    # @param  Unit:  A Unit instance. Units are created by name and a reference to a UnitDataProvider.
+    #               Optionally, the starting health can be modified. 
+    # @param  terrainDefense: A floating number. E.g. for plains, terrainDefense = 0.1
+    # @param  isCrit: A boolean. True if the unit has crit active and False otherwise. 
+    
     defend_instance = (Unit.from_name('commander', provider, health=100), 0.3, False)
+    
+    # Next, we tell the program what units are attacking, and in what order. 
+    
+    # An attack instance is is defined as a tuple of (Unit, terrainDefense, isCrit, requiresSuicide).
+    # The first three arguments are the same as a defense instance, but requiresSuicide can be provided
+    # to indicate whether the unit must die in order for the attack sequence to succeed. 
+    
+    # An attack instance can also be a single string, "hex", in which case the program will simulate hexing. 
+    
     attack_instances = [
         "hex",
         (Unit.from_name('soldier', provider, health=34), 0, False, True),
@@ -53,6 +56,9 @@ def simulate_combat_sequence_example():
         (Unit.from_name('dragon', provider, health=100), 0, False, False),
         (Unit.from_name('dog', provider, health=100), 0, True, False)
     ]
+    
+    # The work is done! Now we just simulate the combat sequence: 
+    # BzZzZt! Program is performing calculations... 
     
     state_dist_history = CombatSimulator.simulate_combat_sequence(defend_instance, attack_instances)
     final_state_dist = state_dist_history[-1]
@@ -69,10 +75,11 @@ def simulate_combat_sequence_example():
         cum_prob += prob
         expected_final_health += state * prob
         
+    # At the end, the program prints the probability of lethal
+    
     print(f"Probability of lethal: {(prob_def_death * 100):.2f}%")
     print(f"Expected final health: {expected_final_health}")
 
     
 if __name__ == "__main__":
-    # simulate_combat_test()
     simulate_combat_sequence_example()
