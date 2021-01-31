@@ -15,9 +15,14 @@ python3 -m pip install numpy
 
 -- TODO: Add support for commander grooves. E.g. Ryota dash, Koji bomb, Ragna jump, Wulfar golf, Sedge groove. 
 -- TODO: Implement a function that takes a given set of attackers and calculates the optimal attacking sequence by brute-force search. 
+-- TODO: Implement the project as a web app with a Javascript interface. (Under construction!) 
 
 ## Contributing
 
 Bug reports can be raised as Github Issues. 
-Please contact Zeronix#2793 on Discord for urgent inquiries. 
+Urgent inquiries can be directed to Zeronix#2793 on Discord. 
+
+I welcome any help with the above feature wishlist! Please message Zeronix#2793 on Discord if you'd like to help out in any way. 
+
+
 
