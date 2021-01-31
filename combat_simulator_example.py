@@ -77,6 +77,16 @@ def simulate_combat_sequence_example():
     #### END OF MODIFIABLE SECTION 2 ####
     #####################################
     
+    print("Combat sequence:")
+    print(f"Defender is a {defend_instance[0].name} at {defend_instance[0].health} health"
+          "with terrain defense {defend_instance[1]}")
+    for i, attack_instance in enumerate(attack_instances):
+        if (type(attack_instance) == str):
+            print(f"Attacker {i+1} is a {attack_instance}")
+        else:
+            print(f"Attacker {i+1} is a {attack_instance[0].name} at {attack_instance[0].health} health"
+                 f"with terrain defense {defend_instance[1]} {'and must suicide' if attack_instance[3] else ''}")
+    
     # The work is done! Now we just simulate the combat sequence: 
     # BzZzZt! Program is performing calculations... 
     
