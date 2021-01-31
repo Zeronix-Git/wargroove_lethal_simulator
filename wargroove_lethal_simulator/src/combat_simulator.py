@@ -155,35 +155,43 @@ class CombatSimulator:
             # If we're on 0-indexed attack N, N attacks have occurred. 
             old_state_distribution = state_dist_history[atk_idx]
             new_state_distribution = collections.defaultdict(float)
-            (atk_unit, atk_terrain_defense, is_atk_crit, requires_suicide) = atk_inst
-            for state, state_prob in old_state_distribution.items():
-                if state <= 0:
-                    # Defender health less than 0 is used for error tracking
-                    # If state < 0, (state + 1000) is the index of a failed suicide
-                    # State == 0 indicates lethal
-                    transition_prob = 1
-                    new_state_distribution[new_state] += state_prob * transition_prob
-                    
-                else:
-                    # Set defender health for combat simulation
-                    # Track the original health for resetting later
-                    orig_def_health = def_unit.health
-                    def_unit.health = state
-                    
-                    combat_results = CombatSimulator.simulate_combat(
-                        atk_unit, atk_terrain_defense, is_atk_crit, 
-                        def_unit, def_terrain_defense, is_def_crit,
-                        depth = depth
-                    )
-                    for (final_atk_health, final_def_health), transition_prob in combat_results.items():
-                        if requires_suicide and final_atk_health > 0:
-                            new_state = -1000 + atk_idx
-                        else:
-                            new_state = final_def_health
-                    
+            
+            # Hex special casing
+            if type(atk_inst) == str:
+                assert atk_inst == "hex"
+                for state, state_prob in old_state_distribution.items():
+                    new_state = max(state - 10, 0)
+                    new_state_distribution[new_state] += state_prob
+            else:            
+                (atk_unit, atk_terrain_defense, is_atk_crit, requires_suicide) = atk_inst
+                for state, state_prob in old_state_distribution.items():
+                    if state <= 0:
+                        # Defender health less than 0 is used for error tracking
+                        # If state < 0, (state + 1000) is the index of a failed suicide
+                        # State == 0 indicates lethal
+                        transition_prob = 1
                         new_state_distribution[new_state] += state_prob * transition_prob
-                    # Reset defending unit health to original
-                    def_unit.health = orig_def_health
+                        
+                    else:
+                        # Set defender health for combat simulation
+                        # Track the original health for resetting later
+                        orig_def_health = def_unit.health
+                        def_unit.health = state
+                        
+                        combat_results = CombatSimulator.simulate_combat(
+                            atk_unit, atk_terrain_defense, is_atk_crit, 
+                            def_unit, def_terrain_defense, is_def_crit,
+                            depth = depth
+                        )
+                        for (final_atk_health, final_def_health), transition_prob in combat_results.items():
+                            if requires_suicide and final_atk_health > 0:
+                                new_state = -1000 + atk_idx
+                            else:
+                                new_state = final_def_health
+                        
+                            new_state_distribution[new_state] += state_prob * transition_prob
+                        # Reset defending unit health to original
+                        def_unit.health = orig_def_health
             state_dist_history.append(new_state_distribution)
         return state_dist_history
     

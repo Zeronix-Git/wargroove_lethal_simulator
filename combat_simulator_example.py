@@ -46,6 +46,7 @@ def simulate_combat_sequence_example():
     
     defend_instance = (Unit.from_name('commander', provider, health=100), 0.3, False)
     attack_instances = [
+        "hex",
         (Unit.from_name('soldier', provider, health=34), 0, False, True),
         (Unit.from_name('dog', provider, health=9), 0, False, True),
         (Unit.from_name('cavalry', provider, health=100), 0, True, False),
@@ -68,7 +69,7 @@ def simulate_combat_sequence_example():
         cum_prob += prob
         expected_final_health += state * prob
         
-    print(f"Probability of lethal: {prob_def_death:.4f}")
+    print(f"Probability of lethal: {(prob_def_death * 100):.2f}%")
     print(f"Expected final health: {expected_final_health}")
 
     
